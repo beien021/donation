@@ -1,25 +1,70 @@
-<!-- 將這段內嵌在 <head> 裡，絕對不會再變白底 -->
-<style>
-    :root { --bg: #050505; --gold: #fbbf24; }
-    body { background: var(--bg) !important; color: #d4d4d8; font-family: sans-serif; }
-    .ranking-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
-    .rank-card { background: #111; border: 1px solid #333; padding: 1.5rem; border-radius: 1rem; text-align: center; }
-    .rank-card.highlight { border-top: 3px solid var(--gold); }
-    .gold-text { color: var(--gold); font-weight: 900; font-size: 2rem; }
-</style>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>數據詳情 | 柯建銘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased">
 
-<!-- HTML 結構 -->
-<div class="ranking-grid">
-    <div class="rank-card highlight">
-        <p>Total Rank</p>
-        <div class="gold-text">#01</div>
-    </div>
-    <div class="rank-card">
-        <p>In Party</p>
-        <div class="gold-text">#01</div>
-    </div>
-    <div class="rank-card">
-        <p>Constituency</p>
-        <div class="gold-text">#01</div>
-    </div>
-</div>
+    <nav class="p-6">
+        <a href="index.html" class="text-xs font-black tracking-widest text-gold">← BACK TO DASHBOARD</a>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <!-- Ranking Summary -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-16">
+            <div class="lg:col-span-1">
+                <h1 class="text-5xl font-black text-white mb-4">柯建銘</h1>
+                <p class="text-slate-500">新竹市 | 民主進步黨</p>
+            </div>
+            <div class="grid grid-cols-3 lg:col-span-3 gap-4">
+                <div class="data-card p-6 rounded-xl text-center">
+                    <p class="text-[10px] text-slate-500 uppercase mb-2">Total Rank</p>
+                    <p class="text-3xl font-mono text-gold">#01</p>
+                </div>
+                <div class="data-card p-6 rounded-xl text-center">
+                    <p class="text-[10px] text-slate-500 uppercase mb-2">In Party</p>
+                    <p class="text-3xl font-mono text-white">#01</p>
+                </div>
+                <div class="data-card p-6 rounded-xl text-center">
+                    <p class="text-[10px] text-slate-500 uppercase mb-2">Constituency</p>
+                    <p class="text-3xl font-mono text-white">#01</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 捐款細目 -->
+        <section class="data-card rounded-2xl overflow-hidden">
+            <div class="p-8 border-b border-white/5 bg-white/5">
+                <h2 class="text-lg font-bold text-white">捐款細目 (Top Contributors)</h2>
+            </div>
+            <div class="p-8">
+                <table class="w-full text-left font-mono">
+                    <thead class="text-slate-500 text-xs uppercase border-b border-white/5">
+                        <tr>
+                            <th class="pb-4">企業/捐助者</th>
+                            <th class="pb-4">金額</th>
+                            <th class="pb-4 text-right">佔比</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-white/5">
+                            <td class="py-6">某營造開發集團</td>
+                            <td class="py-6 text-white font-bold">$2,000,000</td>
+                            <td class="py-6 text-right text-slate-400">3.8%</td>
+                        </tr>
+                        <tr class="border-b border-white/5">
+                            <td class="py-6">某投資貿易有限公司</td>
+                            <td class="py-6 text-white font-bold">$1,500,000</td>
+                            <td class="py-6 text-right text-slate-400">2.9%</td>
+                        </tr>
+                        <!-- 更多列表... -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
