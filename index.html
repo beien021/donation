@@ -1,162 +1,453 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金權筆記 | 2026 政治資本數據專題</title>
-    <!-- 使用 Tailwind CSS 加速佈局 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;900&family=Inter:wght@400;900&display=swap" rel="stylesheet">
-    
-    <style>
-        /* [分離的 .css 邏輯：內嵌於此以確保 GitHub Pages 不會因路徑問題變白底] */
-        :root {
-            --bg-deep: #050505;
-            --gold: #fbbf24;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>政治獻金透明化資料庫</title>
 
-        body {
-            background-color: var(--bg-deep) !important;
-            color: #d4d4d8;
-            font-family: 'Inter', 'Noto Sans TC', sans-serif;
-            scroll-behavior: smooth;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .gold-gradient {
-            background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #d97706 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: #f4f6f8;
+      color: #172033;
+      line-height: 1.7;
+    }
 
-        .data-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(251, 191, 36, 0.1);
-            transition: all 0.3s ease;
-        }
+    header {
+      background: #0b1f3a;
+      color: white;
+      padding: 24px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .data-card:hover {
-            border-color: var(--gold);
-            background: rgba(251, 191, 36, 0.05);
-        }
-    </style>
+    header h1 {
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #cfd8e3;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 14px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0b1f3a, #123f6d);
+      color: white;
+      padding: 90px 8%;
+    }
+
+    .hero span {
+      color: #8fd3ff;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    .hero h2 {
+      font-size: 44px;
+      max-width: 760px;
+      margin: 18px 0;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      max-width: 680px;
+      color: #dce8f5;
+      font-size: 18px;
+    }
+
+    .search-box {
+      background: white;
+      margin: -40px auto 50px;
+      width: 84%;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+      display: grid;
+      grid-template-columns: 1fr 160px;
+      gap: 16px;
+    }
+
+    .search-box input {
+      padding: 16px 18px;
+      border: 1px solid #d7dee8;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .search-box button {
+      border: none;
+      border-radius: 10px;
+      background: #0b63ce;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    section {
+      width: 84%;
+      margin: 0 auto 56px;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+    }
+
+    .section-title h3 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .section-title p {
+      color: #667085;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      border: 1px solid #e6ebf0;
+    }
+
+    .card small {
+      color: #0b63ce;
+      font-weight: 700;
+    }
+
+    .card h4 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .card p {
+      color: #667085;
+      font-size: 15px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .summary {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 22px;
+      border: 1px solid #e6ebf0;
+    }
+
+    .summary strong {
+      font-size: 28px;
+      display: block;
+      color: #0b1f3a;
+    }
+
+    .summary span {
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .results {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid #e6ebf0;
+    }
+
+    .result-header,
+    .result-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr 140px;
+      padding: 18px 24px;
+      align-items: center;
+    }
+
+    .result-header {
+      background: #eef3f8;
+      color: #475467;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .result-row {
+      border-top: 1px solid #edf0f3;
+      font-size: 15px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 99px;
+      background: #e6f0ff;
+      color: #0b63ce;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .btn-small {
+      background: #0b1f3a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .candidate {
+      background: white;
+      border-radius: 18px;
+      padding: 32px;
+      border: 1px solid #e6ebf0;
+    }
+
+    .candidate-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 28px;
+    }
+
+    .candidate h3 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .candidate p {
+      color: #667085;
+    }
+
+    .ranking {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .ranking div {
+      background: #f4f6f8;
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    .ranking strong {
+      font-size: 24px;
+      display: block;
+    }
+
+    footer {
+      background: #0b1f3a;
+      color: #cfd8e3;
+      padding: 36px 8%;
+      font-size: 14px;
+      margin-top: 70px;
+    }
+
+    @media (max-width: 900px) {
+      .cards,
+      .summary-grid,
+      .ranking {
+        grid-template-columns: 1fr;
+      }
+
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+
+      .search-box button {
+        padding: 14px;
+      }
+
+      .result-header {
+        display: none;
+      }
+
+      .result-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .hero h2 {
+        font-size: 32px;
+      }
+
+      nav {
+        display: none;
+      }
+    }
+  </style>
 </head>
-<body class="antialiased">
 
-    <!-- 1. Landing Page: Hero 敘事與搜尋入口 -->
-    <header class="min-h-screen flex flex-col justify-center items-center px-6 relative">
-        <div class="max-w-4xl text-center z-10">
-            <h1 class="text-7xl md:text-9xl font-black text-white mb-8 tracking-tighter">
-                追蹤<span class="gold-gradient">權力的金錢軌跡</span>
-            </h1>
-            <p class="text-slate-400 text-xl mb-12 font-light max-w-2xl mx-auto">
-                解構政治獻金數據，揭露資本如何佈局權力版圖。這不只是數字，而是台灣民主的隱形成本。
-            </p>
+<body>
 
-            <!-- [搜尋入口 CTA] -->
-            <div class="relative max-w-2xl mx-auto mb-10">
-                <input type="text" placeholder="搜尋候選人、企業名稱..." 
-                       class="w-full bg-white/5 border border-white/10 py-6 px-10 rounded-full text-lg focus:outline-none focus:border-amber-500 transition-all">
-                <button class="absolute right-3 top-3 bg-amber-500 text-black font-black px-10 py-3 rounded-full hover:bg-amber-400 transition-all">
-                    分析系統
-                </button>
-            </div>
+  <header>
+    <h1>政治獻金透明化資料庫</h1>
+    <nav>
+      <a href="#">首頁</a>
+      <a href="#">查詢資料</a>
+      <a href="#">精選案例</a>
+      <a href="#">資料說明</a>
+    </nav>
+  </header>
 
-            <!-- [範例查詢] -->
-            <div class="flex flex-wrap justify-center gap-4 text-[10px] font-bold tracking-widest text-slate-500 uppercase">
-                <span>熱門：</span>
-                <a href="#results" class="hover:text-amber-500 transition-all">#建築營造業</a>
-                <a href="#results" class="hover:text-amber-500 transition-all">#土地開發案</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- 2. Results List: Quick Summary & 排序 -->
-    <section id="results" class="max-w-7xl mx-auto px-6 py-32 border-t border-white/5">
-        <div class="flex justify-between items-end mb-16">
-            <h3 class="text-4xl font-bold text-white">關鍵權力指標 / Results List</h3>
-            <div class="text-slate-500 text-xs flex gap-6">
-                <button class="hover:text-white">排序：金額 ↓</button>
-                <button class="hover:text-white">排序：排名</button>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Quick Summary Card -->
-            <div class="data-card p-10 rounded-3xl cursor-pointer group" onclick="document.getElementById('candidate').scrollIntoView()">
-                <div class="flex justify-between mb-8">
-                    <span class="text-[10px] text-amber-500 border border-amber-500/30 px-2 py-0.5 font-bold uppercase">Case Study #01</span>
-                </div>
-                <h3 class="text-3xl font-bold text-white mb-2 group-hover:text-amber-500 transition-colors">柯建銘</h3>
-                <p class="text-slate-500 text-sm mb-10 leading-relaxed font-sans">
-                    資本結構高度集中於營造與開發集團，與區域土地規劃具高度關聯。
-                </p>
-                <div class="pt-8 border-t border-white/5 flex justify-between items-end">
-                    <div>
-                        <p class="text-[10px] text-slate-600 uppercase">Total Amount</p>
-                        <span class="text-2xl font-black text-white">$51,641,147</span>
-                    </div>
-                    <span class="text-[10px] text-amber-500 font-black tracking-widest mb-1">ANALYTICS →</span>
-                </div>
-            </div>
-        </div>
+  <main>
+    <section class="hero">
+      <span>DATA PROJECT</span>
+      <h2>誰資助了政治人物？從政治獻金看見權力與金流的關係。</h2>
+      <p>
+        本專題整理政治獻金資料，讓讀者能透過候選人、政黨、選區與捐款來源，
+        追蹤政治人物背後的資金結構，理解公共決策與利益網絡之間的可能連結。
+      </p>
     </section>
 
-    <!-- 3. Candidate Page: Ranking Summary & 捐款細目 -->
-    <section id="candidate" class="max-w-7xl mx-auto px-6 py-32 border-t border-white/5">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-20">
-            <div class="lg:col-span-1">
-                <p class="text-[10px] font-black text-amber-500 tracking-[0.4em] uppercase mb-4">Candidate Profile</p>
-                <h1 class="text-6xl font-black text-white mb-6">柯建銘</h1>
-            </div>
-            
-            <!-- Ranking Summary -->
-            <div class="grid grid-cols-3 lg:col-span-3 gap-6">
-                <div class="data-card p-8 rounded-2xl text-center border-t-4 border-t-amber-500">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-3">Total Rank</p>
-                    <p class="text-5xl font-black text-amber-500">#01</p>
-                </div>
-                <div class="data-card p-8 rounded-2xl text-center">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-3">In Party</p>
-                    <p class="text-5xl font-black text-white">#01</p>
-                </div>
-                <div class="data-card p-8 rounded-2xl text-center">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-3">Constituency</p>
-                    <p class="text-5xl font-black text-white">#01</p>
-                </div>
-            </div>
+    <div class="search-box">
+      <input type="text" placeholder="輸入候選人、政黨、選區或捐款者名稱" />
+      <button>開始查詢</button>
+    </div>
+
+    <section>
+      <div class="section-title">
+        <h3>範例查詢</h3>
+        <p>不知道從哪裡開始？你可以先從這些方向探索資料。</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <small>候選人查詢</small>
+          <h4>某位候選人的主要捐款來源是誰？</h4>
+          <p>查看候選人總收入、個人捐款、營利事業捐款與政黨內排名。</p>
         </div>
 
-        <!-- 捐款細目 (Detailed Contribution) -->
-        <div class="data-card rounded-3xl overflow-hidden">
-            <div class="px-10 py-8 border-b border-white/5 bg-white/5">
-                <h2 class="text-sm font-black uppercase tracking-widest text-amber-500">Detailed Contribution / 捐款細目</h2>
-            </div>
-            <div class="p-10">
-                <table class="w-full text-left font-mono">
-                    <thead class="text-slate-600 text-xs uppercase border-b border-white/5">
-                        <tr>
-                            <th class="pb-6">Contributor</th>
-                            <th class="pb-6">Amount</th>
-                            <th class="pb-6 text-right">Percentage</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm">
-                        <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-all group">
-                            <td class="py-8 font-sans text-white font-bold text-lg group-hover:text-amber-500">某大營造集團</td>
-                            <td class="py-8 text-amber-500 font-bold text-xl">$2,000,000</td>
-                            <td class="py-8 text-right text-slate-400">3.8%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="card">
+          <small>政黨比較</small>
+          <h4>不同政黨的政治獻金結構有何差異？</h4>
+          <p>比較各政黨候選人的平均收入、資金集中程度與主要支持來源。</p>
         </div>
+
+        <div class="card">
+          <small>選區觀察</small>
+          <h4>哪些選區的政治獻金競爭最激烈？</h4>
+          <p>從選區角度觀察資金分布，了解地方選戰背後的資源差距。</p>
+        </div>
+      </div>
     </section>
 
-    <footer class="py-24 text-center border-t border-white/5 mt-20 opacity-50">
-        <p class="text-[10px] font-black text-slate-700 tracking-[0.8em] uppercase">Project B4 | Data Intelligence</p>
-    </footer>
+    <section>
+      <div class="section-title">
+        <h3>關鍵數據總覽</h3>
+        <p>快速掌握政治獻金資料中的主要趨勢。</p>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary">
+          <strong>1,284</strong>
+          <span>筆候選人資料</span>
+        </div>
+        <div class="summary">
+          <strong>8.6 億</strong>
+          <span>政治獻金總額</span>
+        </div>
+        <div class="summary">
+          <strong>34%</strong>
+          <span>來自營利事業捐贈</span>
+        </div>
+        <div class="summary">
+          <strong>12</strong>
+          <span>高資金集中選區</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h3>搜尋結果</h3>
+        <p>依照總收入排序，呈現候選人的政治獻金概況。</p>
+      </div>
+
+      <div class="results">
+        <div class="result-header">
+          <div>候選人</div>
+          <div>政黨</div>
+          <div>選區</div>
+          <div>總收入</div>
+          <div>分析頁</div>
+        </div>
+
+        <div class="result-row">
+          <div><strong>王小明</strong></div>
+          <div><span class="tag">民主進步黨</span></div>
+          <div>臺北市第一区</div>
+          <div>NT$ 12,450,000</div>
+          <div><button class="btn-small">查看</button></div>
+        </div>
+
+        <div class="result-row">
+          <div><strong>陳美華</strong></div>
+          <div><span class="tag">中國國民黨</span></div>
+          <div>新北市第三区</div>
+          <div>NT$ 9,870,000</div>
+          <div><button class="btn-small">查看</button></div>
+        </div>
+
+        <div class="result-row">
+          <div><strong>林志遠</strong></div>
+          <div><span class="tag">無黨籍</span></div>
+          <div>臺中市第五区</div>
+          <div>NT$ 6,320,000</div>
+          <div><button class="btn-small">查看</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="candidate">
+        <div class="candidate-top">
+          <div>
+            <h3>候選人分析頁｜王小明</h3>
+            <p>政黨：民主進步黨｜選區：臺北市第一区｜年度：2016</p>
+          </div>
+        </div>
+
+        <div class="ranking">
+          <div>
+            <strong>#12</strong>
+            <span>全體候選人收入排名</span>
+          </div>
+          <div>
+            <strong>#4</strong>
+            <span>黨內收入排名</span>
+          </div>
+          <div>
+            <strong>#1</strong>
+            <span>選區收入排名</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    資料來源：公開政治獻金資料。本頁為新聞專題資料庫展示雛形，實際數據需以正式 CSV 匯入後為準。
+  </footer>
 
 </body>
 </html>
