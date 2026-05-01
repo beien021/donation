@@ -3,188 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金權筆記 | 2026 政治獻金透明化調查</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;900&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <title>政治獻金透明化資料庫 | 數據分析平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --gold: #fbbf24; --bg: #050505; --card: rgba(255,255,255,0.03); }
-        body { background-color: var(--bg); color: #d4d4d8; font-family: 'Inter', 'Noto Sans TC', sans-serif; }
-        .gold-gradient { background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: var(--card); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px); }
-        .search-focus:focus { border-color: var(--gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
-        
-        /* 頁面切換邏輯樣式 */
-        .page-section { display: none; }
-        .page-section.active { display: block; animation: fadeIn 0.6s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        :root {
+            --dark-blue: #0a192f;
+            --navy: #112240;
+            --blue: #1f6feb;
+            --gold: #f1c40f;
+            --text-gray: #8892b0;
+            --text-light: #e6f1ff;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', "Microsoft JhengHei", sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* 導覽列 */
+        nav {
+            background-color: rgba(10, 25, 47, 0.95);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--blue); }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        /* Top 3 核心指標區 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--navy);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid var(--blue);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .stat-card h3 {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .stat-card .trend {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            color: #4cd137;
+        }
+
+        /* 排行榜與列表 */
+        .content-section {
+            background: var(--navy);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--blue);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-gray);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            background: var(--blue);
+            color: white;
+        }
+
+        /* 深度分析標籤 */
+        .analysis-badge {
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            table { font-size: 0.8rem; }
+        }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- [1] LANDING PAGE (專題首頁) -->
-    <section id="landing-page" class="page-section active">
-        <!-- Hero 敘事 -->
-        <header class="min-h-screen flex flex-col justify-center items-center px-6 relative">
-            <div class="text-center z-10">
-                <span class="text-amber-500 text-[10px] font-black tracking-[0.8em] uppercase mb-6 block">Special Investigation</span>
-                <h1 class="text-6xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-none">透視<span class="gold-gradient">政治資本</span></h1>
-                <p class="text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed mb-12">
-                    為什麼這很重要？在民主體制中，每一筆獻金都是一張隱形的選票。了解誰在資助你的代議士，才能看清法案背後的真實推手。
-                </p>
+    <nav>
+        <a href="#" class="logo">TRANSPARENCY<span>.TW</span></a>
+        <div>
+            <i class="fas fa-search" style="cursor:pointer; margin-right: 20px;"></i>
+            <i class="fas fa-bars" style="cursor:pointer;"></i>
+        </div>
+    </nav>
 
-                <!-- 搜尋入口 (最重要 CTA) -->
-                <div class="max-w-3xl mx-auto mb-6 relative group">
-                    <input type="text" placeholder="搜尋候選人、企業或特定選區..." class="w-full bg-white/5 border border-white/10 py-6 px-10 rounded-full text-lg search-focus transition-all outline-none text-white">
-                    <button onclick="navigate('results-page')" class="absolute right-3 top-3 bg-amber-500 text-black font-black px-10 py-3 rounded-full hover:bg-amber-400 transition-all text-xs uppercase tracking-widest">開始檢索</button>
-                </div>
-
-                <!-- 範例查詢 (降低門檻) -->
-                <div class="flex justify-center gap-4 text-[10px] text-slate-500 font-bold tracking-widest uppercase">
-                    <span>例如：</span>
-                    <a href="#" class="text-amber-500/60 hover:text-amber-500 underline">#營造業捐贈</a>
-                    <a href="#" class="text-amber-500/60 hover:text-amber-500 underline">#花蓮區域立委</a>
-                    <a href="#" class="text-amber-500/60 hover:text-amber-500 underline">#土地開發利益</a>
-                </div>
+    <div class="container">
+        <!-- 核心指標 -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>資金集中度指數 (Gini)</h3>
+                <div class="value">0.72</div>
+                <div class="trend"><i class="fas fa-arrow-up"></i> 比上屆提升 5.2%</div>
             </div>
-        </header>
-
-        <!-- 編輯精選案例 (Editor’s Picks) -->
-        <section class="max-w-7xl mx-auto px-10 py-24 border-t border-white/5">
-            <h3 class="text-xs font-black text-amber-500 tracking-[0.5em] uppercase mb-16 text-center">Editor’s Picks / 調查精選</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div onclick="navigate('candidate-page')" class="glass p-10 rounded-3xl cursor-pointer hover:border-amber-500/40 transition-all">
-                    <div class="mb-12 flex justify-between items-start">
-                        <span class="text-xs font-mono text-amber-500 italic">Analysis #01</span>
-                        <span class="bg-amber-500/10 text-amber-500 px-2 py-1 rounded text-[10px] font-bold">重點追蹤</span>
-                    </div>
-                    <h4 class="text-3xl font-black text-white mb-2">傅崐萁</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-8">解構東部土地開發背後的營造業金流網。</p>
-                    <span class="text-[10px] font-black text-amber-500 tracking-widest uppercase">閱讀調查報告 →</span>
-                </div>
-                <!-- 其他精選略 -->
+            <div class="stat-card">
+                <h3>平均企業依賴率</h3>
+                <div class="value">42.8%</div>
+                <div class="trend" style="color: #ff4757;"><i class="fas fa-exclamation-triangle"></i> 地產開發業佔比最高</div>
+            </div>
+            <div class="stat-card">
+                <h3>小額捐款參與度</h3>
+                <div class="value">12,405 <span>筆</span></div>
+                <div class="trend"><i class="fas fa-users"></i> 創歷史新高</div>
             </div>
         </section>
-    </section>
 
-    <!-- [2] RESULTS LIST (結果列表頁) -->
-    <section id="results-page" class="page-section px-10 py-24">
-        <div class="max-w-7xl mx-auto">
-            <!-- Quick Summary (關鍵數據) -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-                <div class="glass p-8 rounded-2xl border-l-4 border-amber-500">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">符合結果</p>
-                    <p class="text-3xl font-black text-white font-mono">1,284</p>
-                </div>
-                <div class="glass p-8 rounded-2xl">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">總資金額度</p>
-                    <p class="text-3xl font-black text-amber-500 font-mono">8.6B</p>
-                </div>
-                <div class="glass p-8 rounded-2xl">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">平均捐贈佔比</p>
-                    <p class="text-3xl font-black text-white font-mono">34%</p>
-                </div>
-                <div class="glass p-8 rounded-2xl">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">更新時間</p>
-                    <p class="text-3xl font-black text-white font-mono">2026</p>
-                </div>
-            </div>
+        <!-- 數據列表 -->
+        <section class="content-section">
+            <h2>候選人政治獻金分析表</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>候選人</th>
+                        <th>所屬政黨</th>
+                        <th>總收入 (NTD)</th>
+                        <th>企業佔比</th>
+                        <th>深度分析</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>王大明</strong></td>
+                        <td><span class="tag">藍天黨</span></td>
+                        <td>$45,200,000</td>
+                        <td>58%</td>
+                        <td><span class="analysis-badge">地產關聯高</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>李小華</strong></td>
+                        <td><span class="tag" style="background: #27ae60;">大地黨</span></td>
+                        <td>$22,100,000</td>
+                        <td>12%</td>
+                        <td><span class="analysis-badge">群眾募資型</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>陳阿龍</strong></td>
+                        <td><span class="tag" style="background: #8e44ad;">紫色力量</span></td>
+                        <td>$31,500,000</td>
+                        <td>45%</td>
+                        <td><span class="analysis-badge">都市重劃利害</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-            <!-- 排序 (Ranking) 與 列表 -->
-            <div class="flex justify-between items-end mb-8">
-                <h2 class="text-4xl font-black text-white">檢索結果 <span class="text-sm font-light text-slate-600 ml-4">按金額高低排序</span></h2>
-                <button onclick="navigate('landing-page')" class="text-xs text-slate-500 hover:text-white uppercase tracking-widest transition-colors underline">返回搜尋</button>
-            </div>
+        <!-- 說明區 -->
+        <footer style="text-align: center; color: var(--text-gray); font-size: 0.8rem; margin-top: 50px; padding-bottom: 30px;">
+            <p>© 2026 政治獻金透明化專案小組 | 數據來源：監察院公開資料</p>
+        </footer>
+    </div>
 
-            <div class="space-y-4">
-                <!-- 列表項範例 -->
-                <div onclick="navigate('candidate-page')" class="glass p-8 rounded-2xl flex flex-wrap justify-between items-center cursor-pointer hover:bg-white/[0.05] transition-all">
-                    <div class="flex items-center gap-8">
-                        <span class="text-2xl font-black text-slate-700 font-mono italic">01</span>
-                        <div>
-                            <h4 class="text-xl font-black text-white">柯建銘</h4>
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest">民主進步黨 | 全台不分區</p>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-2xl font-black text-white font-mono">$51,641,147</p>
-                        <span class="text-[10px] text-amber-500 font-bold uppercase">營造業佔比 58%</span>
-                    </div>
-                </div>
-                <!-- 更多結果 (可模擬 Infinite Scroll) -->
-            </div>
-            <p class="text-center mt-20 text-[10px] text-slate-700 tracking-[0.5em] uppercase">往下捲動載入更多結果 (Infinite Scroll)</p>
-        </div>
-    </section>
-
-    <!-- [3] CANDIDATE PAGE (個人深度分析) -->
-    <section id="candidate-page" class="page-section px-10 py-24">
-        <div class="max-w-7xl mx-auto">
-            <button onclick="navigate('results-page')" class="text-xs text-slate-500 hover:text-white uppercase tracking-widest mb-16 block transition-colors">← 返回列表</button>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 mb-20">
-                <!-- Ranking Summary -->
-                <div class="lg:col-span-1">
-                    <h2 class="text-7xl font-black text-white mb-4">傅崐萁</h2>
-                    <p class="text-slate-500 text-sm mb-12">花蓮縣區域立法委員 / 中國國民黨</p>
-                    
-                    <div class="space-y-4">
-                        <div class="glass p-6 rounded-2xl">
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Total Ranking / 全台總排名</p>
-                            <p class="text-4xl font-black text-amber-500">#03</p>
-                        </div>
-                        <div class="glass p-6 rounded-2xl">
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">In Party / 黨內排名</p>
-                            <p class="text-4xl font-black text-white">#02</p>
-                        </div>
-                        <div class="glass p-6 rounded-2xl">
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">In Constituency / 選區排名</p>
-                            <p class="text-4xl font-black text-white">#01</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 捐款細目 (Detailed List) -->
-                <div class="lg:col-span-2">
-                    <h3 class="text-xs font-black text-amber-500 tracking-[0.4em] uppercase mb-8">Contribution Detail / 捐款細目分析</h3>
-                    <div class="glass rounded-3xl overflow-hidden">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-white/5 text-[10px] uppercase text-slate-500 font-bold border-b border-white/5">
-                                <tr>
-                                    <th class="px-8 py-6">來源機構 / 捐款人</th>
-                                    <th class="px-8 py-6">產業別</th>
-                                    <th class="px-8 py-6 text-right">金額</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/5">
-                                <tr class="hover:bg-white/[0.02] transition-colors">
-                                    <td class="px-8 py-6 font-bold text-white">洄瀾水泥開發集團</td>
-                                    <td class="px-8 py-6 text-slate-500 italic">水泥/開發</td>
-                                    <td class="px-8 py-6 text-right font-mono text-amber-500 font-bold">$3,500,000</td>
-                                </tr>
-                                <tr class="hover:bg-white/[0.02] transition-colors">
-                                    <td class="px-8 py-6 font-bold text-white">東台灣建設總會</td>
-                                    <td class="px-8 py-6 text-slate-500 italic">營造建築業</td>
-                                    <td class="px-8 py-6 text-right font-mono text-amber-500 font-bold">$2,800,000</td>
-                                </tr>
-                                <!-- 更多項目略 -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-20 border-t border-white/5 text-center text-slate-700 text-[10px] tracking-[0.8em] uppercase">
-        Project B4 | Financial Intelligence Bureau © 2026
-    </footer>
-
-    <script>
-        function navigate(id) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
 </body>
 </html>
