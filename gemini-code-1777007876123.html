@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金權筆記 | 政治獻金透明化專題</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
+        .hero-gradient { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .data-card:hover { transform: translateY(-2px); transition: all 0.2s; }
+    </style>
+</head>
+<body>
+
+    <header class="hero-gradient text-white py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block px-3 py-1 bg-blue-600 text-xs font-bold rounded-full mb-4">新聞專題：202X 政治獻金解析</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">揭開政治帳本：<br>誰在影響你的代議士？</h1>
+            <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
+                透明的數據是民主的防腐劑。我們分析了 A05 屆次的完整獻金紀錄，透過數據看見企業、政黨與候選人之間的金流網絡。
+            </p>
+            
+            <div class="relative max-w-xl mx-auto">
+                <input type="text" placeholder="搜尋候選人或企業名稱..." class="w-full py-4 px-6 rounded-lg text-slate-900 text-lg shadow-2xl focus:ring-4 focus:ring-blue-500 outline-none">
+                <button class="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-bold transition">搜尋</button>
+            </div>
+            
+            <div class="mt-4 text-sm text-slate-500">
+                熱門查詢：<span class="underline cursor-pointer mx-1">#營造業捐贈榜</span> <span class="underline cursor-pointer mx-1">#得票成本分析</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 -mt-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-xl data-card border-t-4 border-orange-500">
+                <h4 class="text-slate-400 text-xs font-bold uppercase mb-2">編輯精選：吸金力排行</h4>
+                <div class="text-3xl font-mono font-bold text-slate-800">$51,641,147</div>
+                <p class="text-sm text-slate-600 mt-1">本屆單一候選人最高收入紀錄</p>
+                <div class="mt-4 flex items-center text-blue-600 font-bold text-sm cursor-pointer">
+                    查看完整名單 →
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-xl data-card border-t-4 border-blue-500">
+                <h4 class="text-slate-400 text-xs font-bold uppercase mb-2">結構分析：營利事業</h4>
+                <div class="text-3xl font-mono font-bold text-slate-800">55.03%</div>
+                <p class="text-sm text-slate-600 mt-1">特定選區平均企業捐贈佔比</p>
+                <div class="mt-4 flex items-center text-blue-600 font-bold text-sm cursor-pointer">
+                    分析產業流向 →
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-xl data-card border-t-4 border-green-500">
+                <h4 class="text-slate-400 text-xs font-bold uppercase mb-2">民主透明度</h4>
+                <div class="text-3xl font-mono font-bold text-slate-800">14.2%</div>
+                <p class="text-sm text-slate-600 mt-1">本屆平均匿名捐贈比例</p>
+                <div class="mt-4 flex items-center text-blue-600 font-bold text-sm cursor-pointer">
+                    閱讀匿名風險報導 →
+                </div>
+            </div>
+        </div>
+
+        <section class="mt-20">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">資料探索</h2>
+                    <p class="text-slate-500">目前顯示：所有候選人清單 (依總收入排序)</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-4 py-2 bg-white border rounded text-sm hover:bg-slate-50">篩選地區</button>
+                    <button class="px-4 py-2 bg-white border rounded text-sm hover:bg-slate-50">政黨過濾</button>
+                </div>
+            </div>
+
+            <div class="space-y-4 mb-20">
+                <div class="bg-white border border-slate-200 rounded-lg p-5 flex flex-wrap md:flex-nowrap justify-between items-center hover:border-blue-300 transition">
+                    <div class="w-full md:w-1/4">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">當選*</span>
+                        <h3 class="text-lg font-bold text-slate-800">柯建銘</h3>
+                        <p class="text-sm text-slate-400">新竹市第01選區 | 民主進步黨</p>
+                    </div>
+                    <div class="w-1/2 md:w-1/5 mt-4 md:mt-0">
+                        <p class="text-xs text-slate-400 uppercase">總收入</p>
+                        <p class="font-mono font-bold">$51,641,147</p>
+                    </div>
+                    <div class="w-1/2 md:w-1/5 mt-4 md:mt-0 text-center">
+                        <p class="text-xs text-slate-400 uppercase">企業捐贈比</p>
+                        <div class="w-24 h-2 bg-slate-100 mx-auto mt-2 rounded-full overflow-hidden">
+                            <div class="bg-orange-500 h-full" style="width: 52.12%"></div>
+                        </div>
+                        <p class="text-xs mt-1 font-bold">52.12%</p>
+                    </div>
+                    <div class="w-full md:w-auto mt-4 md:mt-0">
+                        <button class="w-full md:w-auto px-6 py-2 bg-slate-800 text-white text-sm rounded hover:bg-slate-700 transition">查看金主明細</button>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-lg p-5 flex flex-wrap md:flex-nowrap justify-between items-center hover:border-blue-300 transition">
+                    <div class="w-full md:w-1/4">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">當選*</span>
+                        <h3 class="text-lg font-bold text-slate-800">邱志偉</h3>
+                        <p class="text-sm text-slate-400">高雄市第02選區 | 民主進步黨</p>
+                    </div>
+                    <div class="w-1/2 md:w-1/5 mt-4 md:mt-0">
+                        <p class="text-xs text-slate-400 uppercase">總收入</p>
+                        <p class="font-mono font-bold">$38,603,507</p>
+                    </div>
+                    <div class="w-1/2 md:w-1/5 mt-4 md:mt-0 text-center">
+                        <p class="text-xs text-slate-400 uppercase">企業捐贈比</p>
+                        <div class="w-24 h-2 bg-slate-100 mx-auto mt-2 rounded-full overflow-hidden">
+                            <div class="bg-orange-500 h-full" style="width: 55.03%"></div>
+                        </div>
+                        <p class="text-xs mt-1 font-bold">55.03%</p>
+                    </div>
+                    <div class="w-full md:w-auto mt-4 md:mt-0">
+                        <button class="w-full md:w-auto px-6 py-2 bg-slate-800 text-white text-sm rounded hover:bg-slate-700 transition">查看金主明細</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-500 py-12 text-center text-sm">
+        <p>資料來源：監察院政治獻金公開查閱平臺</p>
+        <p class="mt-2">© 2026 金權筆記公民媒體專題</p>
+    </footer>
+
+</body>
+</html>
