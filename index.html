@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>金權筆記 | 政治獻金透明化專題</title>
+    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google 字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Noto Sans TC', sans-serif; 
             background-color: #f8fafc; 
+            margin: 0;
+            padding: 0;
         }
         .hero-gradient { 
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
         }
         .data-card { 
-            transition: all 0.3s ease; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
         }
         .data-card:hover { 
             transform: translateY(-5px); 
@@ -23,61 +27,86 @@
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased text-slate-900">
 
-    <!-- 頂部區塊：確保 Padding 足夠，不會遮擋內容 -->
-    <header class="hero-gradient text-white pt-24 pb-28 px-6 text-center">
+    <!-- 頂部區塊：加大 pb (Padding Bottom) 確保不遮擋 -->
+    <header class="hero-gradient text-white pt-24 pb-32 px-6 text-center">
         <div class="max-w-4xl mx-auto">
-            <span class="inline-block px-3 py-1 bg-blue-600 text-xs font-bold rounded-full mb-4 uppercase tracking-widest">新聞專題</span>
-            <h1 class="text-3xl md:text-5xl font-bold mb-6">揭開政治帳本：誰在影響你的代議士？</h1>
-            <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">點擊下方按鈕可直接線上查閱 A05 屆次完整獻金紀錄。</p>
+            <span class="inline-block px-3 py-1 bg-blue-600 text-xs font-bold rounded-full mb-4 uppercase tracking-widest">
+                新聞專案
+            </span>
+            <h1 class="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+                揭開政治帳本：誰在影響你的代議士？
+            </h1>
+            <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
+                點擊下方按鈕可直接於 GitHub 線上查閱 A05 屆次完整獻金紀錄。
+            </p>
             
             <div class="relative max-w-xl mx-auto">
                 <input type="text" placeholder="搜尋候選人..." class="w-full py-4 px-6 rounded-xl text-slate-900 text-lg shadow-2xl focus:ring-4 focus:ring-blue-500 outline-none">
-                <button class="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold transition">搜尋</button>
+                <button class="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold transition">
+                    搜尋
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-12">
+    <!-- 主內容區：移除所有負邊距 (-mt)，確保排版乾淨 -->
+    <main class="max-w-6xl mx-auto px-6 py-16">
+        
         <!-- 數據指標卡片 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <div class="bg-white p-6 rounded-2xl shadow-md data-card border-t-4 border-orange-500">
-                <h4 class="text-slate-400 text-xs font-bold uppercase mb-2">最高單一收入</h4>
-                <div class="text-3xl font-mono font-bold text-slate-800">$51,641,147</div>
-                <a href="https://github.com/beien021/donation/blob/main/A05_basic_all.csv" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center text-blue-600 font-bold text-sm hover:underline">
-                    線上查閱名單 →
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <!-- 最高單一收入 -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm data-card border-t-4 border-orange-500 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-slate-400 text-xs font-bold uppercase mb-2 tracking-widest">最高單一收入</h4>
+                    <div class="text-3xl font-mono font-bold text-slate-800">$51,641,147</div>
+                </div>
+                <a href="https://github.com/beien021/donation/blob/main/A05_basic_all.csv" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center text-blue-600 font-bold text-sm hover:underline">
+                    線上查閱 CSV 內容 →
                 </a>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-md data-card border-t-4 border-blue-500">
-                <h4 class="text-slate-400 text-xs font-bold uppercase mb-2">企業捐贈佔比</h4>
-                <div class="text-3xl font-mono font-bold text-slate-800">55.03%</div>
-                <a href="https://github.com/beien021/donation/blob/main/A05_basic_all.csv" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center text-blue-600 font-bold text-sm hover:underline">
-                    線上查看分佈 →
+
+            <!-- 企業捐贈佔比 -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm data-card border-t-4 border-blue-500 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-slate-400 text-xs font-bold uppercase mb-2 tracking-widest">企業捐贈佔比</h4>
+                    <div class="text-3xl font-mono font-bold text-slate-800">55.03%</div>
+                </div>
+                <a href="https://github.com/beien021/donation/blob/main/A05_basic_all.csv" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center text-blue-600 font-bold text-sm hover:underline">
+                    線上查閱 CSV 內容 →
                 </a>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-md data-card border-t-4 border-green-500">
-                <h4 class="text-slate-400 text-xs font-bold uppercase mb-2">匿名捐贈佔比</h4>
-                <div class="text-3xl font-mono font-bold text-slate-800">14.2%</div>
-                <a href="https://github.com/beien021/donation/blob/main/A05_basic_all.csv" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center text-blue-600 font-bold text-sm hover:underline">
-                    線上查閱報告 →
+
+            <!-- 匿名捐贈佔比 -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm data-card border-t-4 border-green-500 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-slate-400 text-xs font-bold uppercase mb-2 tracking-widest">匿名捐贈佔比</h4>
+                    <div class="text-3xl font-mono font-bold text-slate-800">14.2%</div>
+                </div>
+                <a href="https://github.com/beien021/donation/blob/main/A05_basic_all.csv" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center text-blue-600 font-bold text-sm hover:underline">
+                    線上查閱 CSV 內容 →
                 </a>
             </div>
         </div>
 
-        <!-- 列表 -->
+        <!-- 候選人名單區 -->
         <section>
-            <h2 class="text-2xl font-bold text-slate-800 mb-8">重點候選人紀錄</h2>
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-slate-800">重點候選人紀錄</h2>
+                <span class="text-sm text-slate-500">數據更新至 2026</span>
+            </div>
+            
             <div class="space-y-4">
-                <!-- 候選人 1 -->
+                <!-- 候選人：柯建銘 -->
                 <div class="bg-white border border-slate-200 rounded-2xl p-6 flex flex-wrap md:flex-nowrap justify-between items-center hover:border-blue-400 transition-all shadow-sm">
                     <div class="w-full md:w-1/3">
-                        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">當選</span>
+                        <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded uppercase tracking-tighter">當選</span>
                         <h3 class="text-xl font-bold text-slate-800 mt-1">柯建銘</h3>
                         <p class="text-sm text-slate-400">新竹市 | 民主進步黨</p>
                     </div>
                     <div class="w-1/2 md:w-1/4 mt-4 md:mt-0">
-                        <p class="text-xs text-slate-400 font-bold uppercase">總收入</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">總收入</p>
                         <p class="text-lg font-mono font-bold text-slate-700">$51,641,147</p>
                     </div>
                     <div class="w-full md:w-auto mt-6 md:mt-0">
@@ -87,15 +116,15 @@
                     </div>
                 </div>
 
-                <!-- 候選人 2 -->
+                <!-- 候選人：邱志偉 -->
                 <div class="bg-white border border-slate-200 rounded-2xl p-6 flex flex-wrap md:flex-nowrap justify-between items-center hover:border-blue-400 transition-all shadow-sm">
                     <div class="w-full md:w-1/3">
-                        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">當選</span>
+                        <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded uppercase tracking-tighter">當選</span>
                         <h3 class="text-xl font-bold text-slate-800 mt-1">邱志偉</h3>
                         <p class="text-sm text-slate-400">高雄市 | 民主進步黨</p>
                     </div>
                     <div class="w-1/2 md:w-1/4 mt-4 md:mt-0">
-                        <p class="text-xs text-slate-400 font-bold uppercase">總收入</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">總收入</p>
                         <p class="text-lg font-mono font-bold text-slate-700">$38,603,507</p>
                     </div>
                     <div class="w-full md:w-auto mt-6 md:mt-0">
@@ -108,7 +137,8 @@
         </section>
     </main>
 
-    <footer class="bg-slate-900 text-slate-500 py-12 text-center text-sm">
+    <!-- 頁尾 -->
+    <footer class="bg-slate-900 text-slate-500 py-16 text-center text-sm">
         <p>© 2026 金權筆記公民媒體專題 | 數據來源：監察院</p>
     </footer>
 
