@@ -1,270 +1,58 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金權筆記 | 商業領袖決策版</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Inter:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background-color: #0f172a; color: #f1f5f9; }
-        .hero-gradient { background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%); }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .data-row:hover { background: rgba(255, 255, 255, 0.05); }
-        .hidden { display: none; }
-    </style>
-</head>
-<body class="antialiased">
+/* 基礎設定 */
+:root {
+    --bg-deep: #050505;
+    --gold-primary: #fbbf24;
+    --gold-secondary: #d97706;
+    --glass: rgba(20, 20, 20, 0.8);
+    --border-gold: rgba(251, 191, 36, 0.15);
+}
 
-    <!-- [頁面 A] 總裁級數據看板 -->
-    <div id="homePage">
-        <!-- Header：優化間距，解決文字遮擋 -->
-        <header class="hero-gradient pt-24 pb-40 px-6 text-center relative border-b border-white/5">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex justify-center mb-6">
-                    <span class="px-3 py-1 border border-amber-500/50 text-amber-500 text-[10px] font-black tracking-[0.3em] uppercase rounded">
-                        Strictly Confidential: Macro Analysis
-                    </span>
-                </div>
-                <h1 class="text-4xl md:text-6xl font-bold mb-8 tracking-tighter text-white">
-                    202X 政治資本：<span class="text-amber-500">權力運作解析</span>
-                </h1>
-                <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-                    透過 TOC (單票成本) 演算法與產業資本結構，<br>為您揭示商業利益與代議政治的深度耦合關係。
-                </p>
-            </div>
-        </header>
+body {
+    background-color: var(--bg-deep);
+    color: #d4d4d8;
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+}
 
-        <main class="max-w-7xl mx-auto px-6 -mt-24 pb-24">
-            <!-- 核心候選人：吸金產能 TOP 3 -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
-                <!-- 柯建銘 -->
-                <div class="glass-card rounded-xl p-8 data-card">
-                    <div class="flex justify-between items-start mb-8">
-                        <h3 class="text-2xl font-bold">柯建銘</h3>
-                        <span class="text-[10px] font-mono text-amber-500 border border-amber-500/30 px-2 py-0.5 uppercase">Rank 01</span>
-                    </div>
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">政治獻金總額</p>
-                            <p class="text-3xl font-mono font-bold text-white">$51,641,147</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase">得票率</p>
-                                <p class="text-lg font-mono font-bold">47.63%</p>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase">單票成本 (TOC)</p>
-                                <p class="text-lg font-mono font-bold text-amber-500">$735.5</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="showDetails('柯建銘', '51,641,147', '資本結構高度向營造與能源產業傾斜，具備法規制定層面的壟斷影響力。', '營造開發、再生能源、金融貿易', '建議觀察其在資源分配法案中的關鍵投票立場。')" 
-                        class="w-full mt-8 py-3 bg-white text-slate-900 text-xs font-black uppercase tracking-widest rounded-lg hover:bg-amber-500 transition-colors">
-                        分析商業影響力 →
-                    </button>
-                </div>
+/* 金色漸層文字 */
+.text-gold {
+    background: linear-gradient(135deg, #fde68a 0%, var(--gold-primary) 50%, var(--gold-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-                <!-- 邱志偉 -->
-                <div class="glass-card rounded-xl p-8 data-card">
-                    <div class="flex justify-between items-start mb-8">
-                        <h3 class="text-2xl font-bold">邱志偉</h3>
-                        <span class="text-[10px] font-mono text-slate-500 border border-white/20 px-2 py-0.5 uppercase">Rank 02</span>
-                    </div>
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">政治獻金總額</p>
-                            <p class="text-3xl font-mono font-bold text-white">$38,603,507</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase">得票率</p>
-                                <p class="text-lg font-mono font-bold">63.17%</p>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase">單票成本 (TOC)</p>
-                                <p class="text-lg font-mono font-bold text-amber-500">$305.2</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="showDetails('邱志偉', '38,603,507', '資金主要來自重工業聚落，反映地方供應鏈對特定代議士的高度依賴。', '鋼鐵工業、港口物流、石化產業', '南部基礎建設案量與其資金流入具高度正相關。')" 
-                        class="w-full mt-8 py-3 bg-white text-slate-900 text-xs font-black uppercase tracking-widest rounded-lg hover:bg-amber-500 transition-colors">
-                        分析商業影響力 →
-                    </button>
-                </div>
+/* 商業級卡片 */
+.data-card {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-gold);
+    transition: all 0.4s ease;
+}
 
-                <!-- 王定宇 -->
-                <div class="glass-card rounded-xl p-8 data-card">
-                    <div class="flex justify-between items-start mb-8">
-                        <h3 class="text-2xl font-bold">王定宇</h3>
-                        <span class="text-[10px] font-mono text-slate-500 border border-white/20 px-2 py-0.5 uppercase">Rank 03</span>
-                    </div>
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">政治獻金總額</p>
-                            <p class="text-3xl font-mono font-bold text-white">$35,210,480</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase">得票率</p>
-                                <p class="text-lg font-mono font-bold">58.85%</p>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase">單票成本 (TOC)</p>
-                                <p class="text-lg font-mono font-bold text-amber-600">$303.1</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="showDetails('王定宇', '35,210,480', '高額獻金結合個人品牌效應，資金運用於跨區域傳播的比例較高。', '電子科技、軍事工程、媒體通訊', '跨產業資本整合能力強，屬全國性政策游說之關鍵點。')" 
-                        class="w-full mt-8 py-3 bg-white text-slate-900 text-xs font-black uppercase tracking-widest rounded-lg hover:bg-amber-500 transition-colors">
-                        分析商業影響力 →
-                    </button>
-                </div>
-            </div>
+.data-card:hover {
+    border-color: var(--gold-primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(251, 191, 36, 0.2);
+}
 
-            <!-- [新增區塊] 資本版圖：地區與政黨排名 -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- 地區排名 (依資本吸引力) -->
-                <div class="glass-card rounded-xl overflow-hidden">
-                    <div class="px-6 py-4 border-b border-white/10 flex justify-between items-center">
-                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Regional Capital Intake (地區吸金排名)</h4>
-                        <span class="text-[10px] text-amber-500 font-bold">Unit: TWD</span>
-                    </div>
-                    <div class="p-2">
-                        <table class="w-full text-left text-sm">
-                            <thead>
-                                <tr class="text-slate-500 border-b border-white/5">
-                                    <th class="p-4">地區</th>
-                                    <th class="p-4">領軍人</th>
-                                    <th class="p-4 text-right">資本總額</th>
-                                </tr>
-                            </thead>
-                            <tbody class="font-mono">
-                                <tr class="data-row border-b border-white/5 transition-colors">
-                                    <td class="p-4 font-bold text-white">新竹市</td>
-                                    <td class="p-4 text-slate-400">柯建銘</td>
-                                    <td class="p-4 text-right text-amber-500">51,641,147</td>
-                                </tr>
-                                <tr class="data-row border-b border-white/5 transition-colors">
-                                    <td class="p-4 font-bold text-white">高雄市</td>
-                                    <td class="p-4 text-slate-400">邱志偉</td>
-                                    <td class="p-4 text-right">38,603,507</td>
-                                </tr>
-                                <tr class="data-row border-b border-white/5 transition-colors">
-                                    <td class="p-4 font-bold text-white">台南市</td>
-                                    <td class="p-4 text-slate-400">王定宇</td>
-                                    <td class="p-4 text-right">35,210,480</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+/* 搜尋入口美化 */
+.search-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s;
+}
 
-                <!-- 政黨資本佔比 -->
-                <div class="glass-card rounded-xl overflow-hidden">
-                    <div class="px-6 py-4 border-b border-white/10 flex justify-between items-center">
-                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Party Funding Structure (政黨資本分佈)</h4>
-                        <span class="text-[10px] text-blue-400 font-bold">Market Share</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="space-y-6">
-                            <!-- 民主進步黨 -->
-                            <div>
-                                <div class="flex justify-between mb-2 text-xs">
-                                    <span class="font-bold">民主進步黨 (DPP)</span>
-                                    <span class="font-mono text-slate-400">65.4%</span>
-                                </div>
-                                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-500 h-full" style="width: 65.4%"></div>
-                                </div>
-                            </div>
-                            <!-- 中國國民黨 -->
-                            <div>
-                                <div class="flex justify-between mb-2 text-xs">
-                                    <span class="font-bold">中國國民黨 (KMT)</span>
-                                    <span class="font-mono text-slate-400">28.2%</span>
-                                </div>
-                                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-blue-500 h-full" style="width: 28.2%"></div>
-                                </div>
-                            </div>
-                            <!-- 其他 -->
-                            <div>
-                                <div class="flex justify-between mb-2 text-xs">
-                                    <span class="font-bold">其他 (Others)</span>
-                                    <span class="font-mono text-slate-400">6.4%</span>
-                                </div>
-                                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-slate-500 h-full" style="width: 6.4%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="mt-8 text-[10px] text-slate-500 leading-relaxed italic">
-                            * 本數據基於營利事業捐贈明細之彙整分析。反映本屆特定選區資本市場之傾斜狀態。
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+.search-input:focus {
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+    outline: none;
+}
 
-    <!-- [頁面 B] 深度報告介面 (同前版本，優化為暗色調) -->
-    <div id="detailPage" class="hidden min-h-screen bg-slate-950 text-slate-300">
-        <nav class="p-8 max-w-7xl mx-auto flex justify-between items-center">
-            <button onclick="backToHome()" class="text-xs font-black uppercase tracking-widest text-amber-500">← Back to Insight Dashboard</button>
-            <span class="text-[10px] text-slate-600 font-mono tracking-widest uppercase">Internal Use Only</span>
-        </nav>
-        <main class="max-w-4xl mx-auto px-6 py-12">
-            <div class="border border-white/10 p-12 rounded-lg bg-slate-900/50">
-                <h2 id="detailName" class="text-5xl font-bold text-white mb-2">---</h2>
-                <p id="detailAmount" class="text-2xl font-mono text-amber-500 mb-12">$0,000,000</p>
-                <div class="space-y-12">
-                    <section>
-                        <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4">Hypothesis</h4>
-                        <p id="inference1" class="text-xl text-slate-200 leading-relaxed"></p>
-                    </section>
-                    <section>
-                        <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4">Vertical Hubs</h4>
-                        <div class="flex gap-2">
-                            <span id="tag1" class="px-3 py-1 bg-white/5 border border-white/10 text-xs rounded"></span>
-                            <span id="tag2" class="px-3 py-1 bg-white/5 border border-white/10 text-xs rounded"></span>
-                            <span id="tag3" class="px-3 py-1 bg-white/5 border border-white/10 text-xs rounded"></span>
-                        </div>
-                    </section>
-                    <section class="pt-8 border-t border-white/10">
-                        <h4 class="text-[10px] font-black text-amber-500 uppercase tracking-[0.3em] mb-4">Strategic Conclusion</h4>
-                        <p id="inferenceConclusion" class="text-lg text-slate-400 italic"></p>
-                    </section>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <footer class="py-12 text-center text-slate-600 border-t border-white/5">
-        <p class="text-[10px] uppercase tracking-[0.4em] mb-2">Political Capital Insight v4.0</p>
-        <p class="text-xs">© 2026 金權筆記公民媒體專題 | 數據源於監察院公開資料</p>
-    </footer>
-
-    <script>
-        function showDetails(name, amount, inf1, tags, conclusion) {
-            document.getElementById('homePage').classList.add('hidden');
-            document.getElementById('detailPage').classList.remove('hidden');
-            window.scrollTo(0,0);
-            document.getElementById('detailName').innerText = name;
-            document.getElementById('detailAmount').innerText = '$' + amount;
-            document.getElementById('inference1').innerText = inf1;
-            const tagArray = tags.split('、');
-            document.getElementById('tag1').innerText = tagArray[0];
-            document.getElementById('tag2').innerText = tagArray[1];
-            document.getElementById('tag3').innerText = tagArray[2];
-            document.getElementById('inferenceConclusion').innerText = conclusion;
-        }
-        function backToHome() {
-            document.getElementById('detailPage').classList.add('hidden');
-            document.getElementById('homePage').classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+/* 按鈕風格 */
+.btn-gold {
+    background: linear-gradient(135deg, #fde68a 0%, var(--gold-primary) 100%);
+    color: #000;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
